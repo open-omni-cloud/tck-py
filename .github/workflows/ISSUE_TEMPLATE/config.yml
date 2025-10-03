@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General Support
+    url: https://github.com/openomnicloud/tck-py/discussions
+    about: For questions, open ideas, or general discussions.

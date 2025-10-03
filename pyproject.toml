@@ -1,0 +1,90 @@
+[tool.poetry]
+name = "open-omni-cloud-tck"
+version = "0.1.0"
+description = "The official Technology Compatibility Kit (TCK) for Python implementations of the Open Omni-Cloud standard."
+authors = ["Guandaline <guandaline@nalaminds.ai>"]
+license = "Apache-2.0"
+readme = "README.md"
+homepage = "https://github.com/open-omni-cloud/tck-py"
+repository = "https://github.com/open-omni-cloud/tck-py"
+keywords = ["omni-cloud", "multi-cloud", "cloud-agnostic", "tck", "testing", "resilience", "portability"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Testing",
+]
+packages = [
+    { include = "tck_py", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+opentelemetry-api = "^1.25.0"
+
+[tool.poetry.group.dev.dependencies]
+# Core Testing
+pytest = "^8.2.0"
+pytest-asyncio = "^0.23.0"
+pytest-cov = "^5.0.0"
+pytest-mock = "^3.12.0"
+
+# Quality & Formatting
+ruff = "^0.4.4"
+black = "^24.4.0"
+pre-commit = "^3.7.0"
+
+# Security
+bandit = "^1.7.9"
+detect-secrets = "^1.5.0"
+safety = "^3.2.0"
+
+# Typing
+mypy = "^1.10.0"
+
+# Release Automation
+python-semantic-release = ">=9.0.0,<10.0.0"
+toml = "^0.10.2"
+
+# OTel SDK for TCK implementation
+opentelemetry-sdk = "^1.25.0"
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.6.0"
+mkdocs-material = "^9.5.0"
+mkdocstrings = { extras = ["python"], version = "^0.25.0" }
+
+
+# --- Tool Configurations ---
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = [".venv", "__pycache__", "migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+minversion = "6.0"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.semantic_release]
+repository = "github"
+version_toml = "pyproject.toml:tool.poetry.version"
+branch = "main"
+changelog_file = "CHANGELOG.md"
+build_command = "poetry build"
+upload_to_pypi = true
